@@ -11,5 +11,5 @@
 (defn get-command
   [argv]
   { :op (keyword (first argv))
-    :arg1 (Integer/parseInt (second argv))
-    :arg2 (Integer/parseInt (nth argv 2))})
+    :arg1 (Double/parseDouble (second argv))
+    :arg2 (Double/parseDouble (nth argv 2))})
