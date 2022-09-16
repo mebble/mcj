@@ -16,5 +16,5 @@ FIXME: explanation
 ### Test
 
 ```
-lein test
+lein eftest
 ```
