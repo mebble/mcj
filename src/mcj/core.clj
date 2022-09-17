@@ -44,4 +44,4 @@
 (defn -main
   "Execute arithmetic expression from command line arguments"
   [& argv]
-  (e/branch (e/branch-right (apply get-command argv) execute) println println))
+  (e/branch (e/branch-right (apply get-command (argv-command argv)) execute) println println))

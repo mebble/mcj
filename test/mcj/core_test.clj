@@ -64,7 +64,9 @@
 
 (deftest test-integration-main
   (testing "Happy path"
-    (is (= "5.0\n" (with-out-str (-main "add" "2" "3")))))
+    (is (= "5.0\n" (with-out-str (-main "add" "2" "3"))))
+    (is (= "5.0\n" (with-out-str (-main "add" "2" "3" "extra" "argv" "items")))))
 
   (testing "Sad path"
+    (is (= "Unknown command \n" (with-out-str (-main))))
     (is (= "Unknown command foo\n" (with-out-str (-main "foo" "2" "3"))))))
