@@ -10,7 +10,7 @@
   (println (nth argv 2)))
 
 (defn get-command
-  [argv]
-  (either/right {:op (keyword (first argv))
-                 :arg1 (Double/parseDouble (second argv))
-                 :arg2 (Double/parseDouble (nth argv 2))}))
+  [op arg1 arg2]
+  (either/right {:op (keyword op)
+                 :arg1 (Double/parseDouble arg1)
+                 :arg2 (Double/parseDouble arg2)}))
