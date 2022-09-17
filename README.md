@@ -1,5 +1,7 @@
 # mcj
 
+[![CI Badge](https://github.com/mebble/mcj/actions/workflows/ci.yml/badge.svg)](https://github.com/mebble/mcj/actions/workflows/ci.yml)
+
 A math CLI tool in Clojure.
 
 ## Usage
