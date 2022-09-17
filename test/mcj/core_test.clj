@@ -55,3 +55,10 @@
     (is (= (e/right 0) (execute {:op :div, :arg1 0, :arg2 1})))
     (is (= (e/left "Can't divide by zero") (execute {:op :div, :arg1 1, :arg2 0})))
     (is (= (e/left "Can't divide by zero") (execute {:op :div, :arg1 1, :arg2 0.0})))))
+
+(deftest test-integration-main
+  (testing "Happy path"
+    (is (= "5.0\n" (with-out-str (-main "add" "2" "3")))))
+
+  (testing "Sad path"
+    (is (= "Unknown command foo\n" (with-out-str (-main "foo" "2" "3"))))))

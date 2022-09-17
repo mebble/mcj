@@ -3,13 +3,6 @@
   (:require [cats.monad.either :as e]
             [clojure.string :as s]))
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& argv]
-  (println (first argv))
-  (println (second argv))
-  (println (nth argv 2)))
-
 (def operations #{:add :sub :mul :div})
 
 (defn- parse-arg [arg-str] (try (e/right (Double/parseDouble arg-str))
@@ -41,3 +34,8 @@
     :div (if (== arg2 0)
            (e/left "Can't divide by zero")
            (e/right (/ arg1 arg2)))))
+
+(defn -main
+  "Execute arithmetic expression from command line arguments"
+  [& argv]
+  (e/branch (e/branch-right (apply get-command argv) execute) println println))
