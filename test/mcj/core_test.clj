@@ -22,4 +22,12 @@
 
     (testing "Unknown command"
       (is (= (either/left "Unknown command foo")
-             (get-command "foo" "2" "3"))))))
+             (get-command "foo" "2" "3"))))
+
+    (testing "Invalid argument"
+      (is (= (either/left "Invalid argument abc")
+             (get-command "add" "abc" "3")))
+      (is (= (either/left "Invalid argument def")
+             (get-command "add" "2" "def")))
+      (is (= (either/left "Invalid argument abc")
+             (get-command "add" "abc" "def"))))))
