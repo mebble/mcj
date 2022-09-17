@@ -20,8 +20,8 @@
               left (e/first-left [arg1 arg2])]
           (if (nil? left)
             (e/right {:op op
-                           :arg1 (e/branch-right arg1 identity)
-                           :arg2 (e/branch-right arg2 identity)})
+                      :arg1 (e/branch-right arg1 identity)
+                      :arg2 (e/branch-right arg2 identity)})
             left)))
       (e/left (str "Unknown command " op-str)))))
 
@@ -34,6 +34,12 @@
     :div (if (== arg2 0)
            (e/left "Can't divide by zero")
            (e/right (/ arg1 arg2)))))
+
+(defn argv-command [& argv]
+  (let [opstr (nth argv 0 "")
+        arg1str (nth argv 1 "")
+        arg2str (nth argv 2 "")]
+    (list opstr arg1str arg2str)))
 
 (defn -main
   "Execute arithmetic expression from command line arguments"

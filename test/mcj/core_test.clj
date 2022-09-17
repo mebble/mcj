@@ -3,6 +3,12 @@
             [mcj.core :refer :all]
             [cats.monad.either :as e]))
 
+(deftest test-get-argv-command
+  (is (= '("" "" "") (argv-command)))
+  (is (= '("add" "" "") (argv-command "add")))
+  (is (= '("add" "2" "") (argv-command "add" "2")))
+  (is (= '("add" "2" "3") (argv-command "add" "2" "3"))))
+
 (deftest test-get-command
   (testing "Basic happy path"
     (let [get-expected (fn [op] (e/right {:op op, :arg1 2.0, :arg2 3.0}))]
