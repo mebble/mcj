@@ -1,5 +1,6 @@
 (ns mcj.core
-  (:gen-class))
+  (:gen-class)
+  (:require [cats.monad.either :as either]))
 
 (defn -main
   "I don't do a whole lot ... yet."
@@ -10,6 +11,6 @@
 
 (defn get-command
   [argv]
-  { :op (keyword (first argv))
-    :arg1 (Double/parseDouble (second argv))
-    :arg2 (Double/parseDouble (nth argv 2))})
+  (either/right {:op (keyword (first argv))
+                 :arg1 (Double/parseDouble (second argv))
+                 :arg2 (Double/parseDouble (nth argv 2))}))
