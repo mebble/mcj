@@ -35,7 +35,7 @@
            (e/left "Can't divide by zero")
            (e/right (/ arg1 arg2)))))
 
-(defn argv-command [& argv]
+(defn argv-command [argv]
   (let [opstr (nth argv 0 "")
         arg1str (nth argv 1 "")
         arg2str (nth argv 2 "")]
