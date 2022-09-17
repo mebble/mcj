@@ -9,8 +9,13 @@
   (println (second argv))
   (println (nth argv 2)))
 
+(def operations #{:add :sub :mul :div})
+
 (defn get-command
-  [op arg1 arg2]
-  (either/right {:op (keyword op)
-                 :arg1 (Double/parseDouble arg1)
-                 :arg2 (Double/parseDouble arg2)}))
+  [opstr arg1 arg2]
+  (let [op (keyword opstr)]
+    (if (contains? operations op)
+      (either/right {:op op
+                     :arg1 (Double/parseDouble arg1)
+                     :arg2 (Double/parseDouble arg2)})
+      (either/left (str "Unknown command " opstr)))))

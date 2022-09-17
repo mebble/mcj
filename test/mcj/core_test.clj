@@ -18,4 +18,8 @@
 
     (testing "Fractional arguments"
       (is (= (either/right {:op :add, :arg1 2.5, :arg2 3.2})
-             (get-command "add" "2.5" "3.2"))))))
+             (get-command "add" "2.5" "3.2"))))
+
+    (testing "Unknown command"
+      (is (= (either/left "Unknown command foo")
+             (get-command "foo" "2" "3"))))))
