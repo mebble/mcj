@@ -29,7 +29,19 @@
     (is (= (either/left "Invalid argument def")
            (get-command "add" "2" "def")))
     (is (= (either/left "Invalid argument abc")
-           (get-command "add" "abc" "def")))))
+           (get-command "add" "abc" "def"))))
+
+  (testing "Missing argument"
+    (let [expected (either/left "Insufficient arguments")]
+      (testing "arg1"
+        (is (= expected (get-command "add" nil "3")))
+        (is (= expected (get-command "add" "" "3")))
+        (is (= expected (get-command "add" "   " "3"))))
+
+      (testing "arg2"
+        (is (= expected (get-command "add" "2" nil)))
+        (is (= expected (get-command "add" "2" "")))
+        (is (= expected (get-command "add" "2" "   ")))))))
 
 (deftest test-execute
   (testing "Happy path"

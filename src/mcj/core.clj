@@ -1,6 +1,7 @@
 (ns mcj.core
   (:gen-class)
-  (:require [cats.monad.either :as either]))
+  (:require [cats.monad.either :as either]
+            [clojure.string :as s]))
 
 (defn -main
   "I don't do a whole lot ... yet."
@@ -19,14 +20,16 @@
   [op-str arg1-str arg2-str]
   (let [op (keyword op-str)]
     (if (contains? operations op)
-      (let [arg1 (parse-arg arg1-str)
-            arg2 (parse-arg arg2-str)
-            left (either/first-left [arg1 arg2])]
-        (if (nil? left)
-          (either/right {:op op
-                         :arg1 (either/branch-right arg1 identity)
-                         :arg2 (either/branch-right arg2 identity)})
-          left))
+      (if (some s/blank? [arg1-str arg2-str])
+        (either/left "Insufficient arguments")
+        (let [arg1 (parse-arg arg1-str)
+              arg2 (parse-arg arg2-str)
+              left (either/first-left [arg1 arg2])]
+          (if (nil? left)
+            (either/right {:op op
+                           :arg1 (either/branch-right arg1 identity)
+                           :arg2 (either/branch-right arg2 identity)})
+            left)))
       (either/left (str "Unknown command " op-str)))))
 
 (defn execute
