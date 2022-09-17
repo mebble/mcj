@@ -28,3 +28,11 @@
                          :arg2 (either/branch-right arg2 identity)})
           left))
       (either/left (str "Unknown command " op-str)))))
+
+(defn execute
+  [{ op :op, arg1 :arg1, arg2 :arg2 }]
+  (either/right (case op
+                  :add (+ arg1 arg2)
+                  :sub (- arg1 arg2)
+                  :mul (* arg1 arg2)
+                  :div (/ arg1 arg2))))
