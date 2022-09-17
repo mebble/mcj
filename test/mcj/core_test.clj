@@ -4,36 +4,35 @@
             [cats.monad.either :as either]))
 
 (deftest test-get-command
-  (testing "Basic"
-    (testing "All commands"
-      (let [get-expected (fn [op] (either/right {:op op, :arg1 2.0, :arg2 3.0}))]
-        (is (= (get-expected :add) (get-command "add" "2" "3")))
-        (is (= (get-expected :sub) (get-command "sub" "2" "3")))
-        (is (= (get-expected :mul) (get-command "mul" "2" "3")))
-        (is (= (get-expected :div) (get-command "div" "2" "3")))))
+  (testing "Basic happy path"
+    (let [get-expected (fn [op] (either/right {:op op, :arg1 2.0, :arg2 3.0}))]
+      (is (= (get-expected :add) (get-command "add" "2" "3")))
+      (is (= (get-expected :sub) (get-command "sub" "2" "3")))
+      (is (= (get-expected :mul) (get-command "mul" "2" "3")))
+      (is (= (get-expected :div) (get-command "div" "2" "3")))))
 
-    (testing "Negative arguments"
-      (is (= (either/right {:op :add, :arg1 -2.0, :arg2 -3.0})
-             (get-command "add" "-2" "-3"))))
+  (testing "Negative arguments"
+    (is (= (either/right {:op :add, :arg1 -2.0, :arg2 -3.0})
+           (get-command "add" "-2" "-3"))))
 
-    (testing "Fractional arguments"
-      (is (= (either/right {:op :add, :arg1 2.5, :arg2 3.2})
-             (get-command "add" "2.5" "3.2"))))
+  (testing "Fractional arguments"
+    (is (= (either/right {:op :add, :arg1 2.5, :arg2 3.2})
+           (get-command "add" "2.5" "3.2"))))
 
-    (testing "Unknown command"
-      (is (= (either/left "Unknown command foo")
-             (get-command "foo" "2" "3"))))
+  (testing "Unknown command"
+    (is (= (either/left "Unknown command foo")
+           (get-command "foo" "2" "3"))))
 
-    (testing "Invalid argument"
-      (is (= (either/left "Invalid argument abc")
-             (get-command "add" "abc" "3")))
-      (is (= (either/left "Invalid argument def")
-             (get-command "add" "2" "def")))
-      (is (= (either/left "Invalid argument abc")
-             (get-command "add" "abc" "def"))))))
+  (testing "Invalid argument"
+    (is (= (either/left "Invalid argument abc")
+           (get-command "add" "abc" "3")))
+    (is (= (either/left "Invalid argument def")
+           (get-command "add" "2" "def")))
+    (is (= (either/left "Invalid argument abc")
+           (get-command "add" "abc" "def")))))
 
 (deftest test-execute
-  (testing "All commands"
+  (testing "Happy path"
     (is (= (either/right 5) (execute {:op :add, :arg1 2, :arg2 3 })))
     (is (= (either/right -1) (execute {:op :sub, :arg1 2, :arg2 3})))
     (is (= (either/right 6) (execute {:op :mul, :arg1 2, :arg2 3})))
