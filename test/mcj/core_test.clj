@@ -53,4 +53,5 @@
   (testing "Argument is zero"
     (is (= (e/right 0) (execute {:op :mul, :arg1 0, :arg2 1})))
     (is (= (e/right 0) (execute {:op :div, :arg1 0, :arg2 1})))
-    (is (= (e/left "Can't divide by zero") (execute {:op :div, :arg1 1, :arg2 0})))))
+    (is (= (e/left "Can't divide by zero") (execute {:op :div, :arg1 1, :arg2 0})))
+    (is (= (e/left "Can't divide by zero") (execute {:op :div, :arg1 1, :arg2 0.0})))))

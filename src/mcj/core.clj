@@ -38,6 +38,6 @@
     :add (e/right (+ arg1 arg2))
     :sub (e/right (- arg1 arg2))
     :mul (e/right (* arg1 arg2))
-    :div (if (= arg2 0)
+    :div (if (== arg2 0)
            (e/left "Can't divide by zero")
            (e/right (/ arg1 arg2)))))
