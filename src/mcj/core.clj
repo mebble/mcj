@@ -31,8 +31,10 @@
 
 (defn execute
   [{ op :op, arg1 :arg1, arg2 :arg2 }]
-  (either/right (case op
-                  :add (+ arg1 arg2)
-                  :sub (- arg1 arg2)
-                  :mul (* arg1 arg2)
-                  :div (/ arg1 arg2))))
+  (case op
+    :add (either/right (+ arg1 arg2))
+    :sub (either/right (- arg1 arg2))
+    :mul (either/right (* arg1 arg2))
+    :div (if (= arg2 0)
+           (either/left "Can't divide by zero")
+           (either/right (/ arg1 arg2)))))

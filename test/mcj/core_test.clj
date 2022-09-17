@@ -36,4 +36,9 @@
     (is (= (either/right 5) (execute {:op :add, :arg1 2, :arg2 3 })))
     (is (= (either/right -1) (execute {:op :sub, :arg1 2, :arg2 3})))
     (is (= (either/right 6) (execute {:op :mul, :arg1 2, :arg2 3})))
-    (is (= (either/right 2/3) (execute {:op :div, :arg1 2, :arg2 3})))))
+    (is (= (either/right 2/3) (execute {:op :div, :arg1 2, :arg2 3}))))
+
+  (testing "Argument is zero"
+    (is (= (either/right 0) (execute {:op :mul, :arg1 0, :arg2 1})))
+    (is (= (either/right 0) (execute {:op :div, :arg1 0, :arg2 1})))
+    (is (= (either/left "Can't divide by zero") (execute {:op :div, :arg1 1, :arg2 0})))))
