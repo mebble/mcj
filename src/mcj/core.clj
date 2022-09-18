@@ -1,6 +1,7 @@
 (ns mcj.core
   (:gen-class)
-  (:require [cats.monad.either :as e]
+  (:require [cats.core :as c]
+            [cats.monad.either :as e]
             [clojure.string :as s]))
 
 (def operations #{:add :sub :mul :div})
@@ -44,4 +45,9 @@
 (defn -main
   "Execute arithmetic expression from command line arguments"
   [& argv]
-  (e/branch (e/branch-right (apply get-command (argv-command argv)) execute) println println))
+  (->> argv
+       (argv-command)
+       (apply get-command)
+       (#(c/bind % execute))
+       (c/extract)
+       (println)))
