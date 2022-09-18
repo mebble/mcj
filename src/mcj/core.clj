@@ -64,7 +64,7 @@
   [& argv]
   (->> argv
        (argv-command)
-       (#(c/bind % (fn [x] (apply get-command x))))
+       (#(c/bind % (fn [x] (apply get-command (read-dot x)))))
        (#(c/bind % execute))
        (c/extract)
        (println)))
