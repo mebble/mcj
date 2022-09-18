@@ -62,9 +62,11 @@
 (defn -main
   "Execute arithmetic expression from command line arguments"
   [& argv]
-  (->> argv
-       (argv-command)
-       (#(c/bind % (fn [x] (apply get-command (read-dot x)))))
-       (#(c/bind % execute))
-       (c/extract)
-       (println)))
+  (as-> argv x
+       (argv-command x)
+       (c/bind x #(->> %
+                       read-dot
+                       (apply get-command)))
+       (c/bind x execute)
+       (c/extract x)
+       (println x)))
