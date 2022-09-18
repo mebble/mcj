@@ -40,14 +40,18 @@
   (let [opstr (nth argv 0 "")
         arg1str (nth argv 1 "")
         arg2str (nth argv 2 "")]
-    (list opstr arg1str arg2str)))
+    (if (s/blank? opstr)
+      (e/left "No command given")
+      (if (s/blank? arg1str)
+        (e/left "No arguments given")
+        (e/right (list opstr arg1str arg2str))))))
 
 (defn -main
   "Execute arithmetic expression from command line arguments"
   [& argv]
   (->> argv
        (argv-command)
-       (apply get-command)
+       (#(c/bind % (fn [x] (apply get-command x))))
        (#(c/bind % execute))
        (c/extract)
        (println)))

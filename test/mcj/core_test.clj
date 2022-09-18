@@ -4,10 +4,10 @@
             [cats.monad.either :as e]))
 
 (deftest test-get-argv-command
-  (is (= '("" "" "") (argv-command ())))
-  (is (= '("add" "" "") (argv-command '("add"))))
-  (is (= '("add" "2" "") (argv-command '("add" "2"))))
-  (is (= '("add" "2" "3") (argv-command '("add" "2" "3")))))
+  (is (= (e/left "No command given") (argv-command ())))
+  (is (= (e/left "No arguments given") (argv-command '("add"))))
+  (is (= (e/right '("use", "2", "")) (argv-command '("use" "2"))))
+  (is (= (e/right '("add" "2" "3")) (argv-command '("add" "2" "3")))))
 
 (deftest test-get-command
   (testing "Basic happy path"
@@ -68,5 +68,5 @@
     (is (= "5.0\n" (with-out-str (-main "add" "2" "3" "extra" "argv" "items")))))
 
   (testing "Sad path"
-    (is (= "Unknown command \n" (with-out-str (-main))))
+    (is (= "No command given\n" (with-out-str (-main))))
     (is (= "Unknown command foo\n" (with-out-str (-main "foo" "2" "3"))))))
