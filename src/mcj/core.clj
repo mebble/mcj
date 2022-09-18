@@ -36,6 +36,8 @@
            (e/left "Can't divide by zero")
            (e/right (/ arg1 arg2)))))
 
+(defn- dot-or [s] (if (= "." s) :dot s))
+
 (defn argv-command [argv]
   (let [opstr (nth argv 0 "")
         arg1str (nth argv 1 "")
@@ -44,7 +46,11 @@
       (e/left "No command given")
       (if (s/blank? arg1str)
         (e/left "No arguments given")
-        (e/right (list opstr arg1str arg2str))))))
+        (let [a1 (dot-or arg1str)
+              a2 (dot-or arg2str)]
+          (if (= :dot a1 a2)
+            (e/left "Can't have two dot arguments")
+            (e/right (list opstr a1 a2))))))))
 
 (defn -main
   "Execute arithmetic expression from command line arguments"
