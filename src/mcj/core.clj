@@ -4,7 +4,7 @@
             [cats.monad.either :as e]
             [clojure.string :as s]))
 
-(def operations #{:add :sub :mul :div})
+(def ^:private operations #{:add :sub :mul :div})
 
 (defn- parse-arg [arg-str] (try (e/right (Double/parseDouble arg-str))
                                 (catch NumberFormatException _e

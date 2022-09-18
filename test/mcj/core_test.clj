@@ -40,12 +40,10 @@
   (testing "Missing argument"
     (let [expected (e/left "Insufficient arguments")]
       (testing "arg1"
-        (is (= expected (get-command "add" nil "3")))
         (is (= expected (get-command "add" "" "3")))
         (is (= expected (get-command "add" "   " "3"))))
 
       (testing "arg2"
-        (is (= expected (get-command "add" "2" nil)))
         (is (= expected (get-command "add" "2" "")))
         (is (= expected (get-command "add" "2" "   ")))))))
 
