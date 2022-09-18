@@ -12,6 +12,12 @@
   (is (= (e/right '("add" "2" :dot)) (argv-command '("add" "2" "."))))
   (is (= (e/left "Can't have two dot arguments") (argv-command '("add" "." ".")))))
 
+(deftest test-read-dot
+  (let [mocked (fn [f] (with-in-str "10" (f)))]
+    (is (= '("add" "2" "3") (mocked #(read-dot '("add" "2" "3")))))
+    (is (= '("add" "10" "3") (mocked #(read-dot '("add" :dot "3")))))
+    (is (= '("add" "2" "10") (mocked #(read-dot '("add" "2" :dot)))))))
+
 (deftest test-get-command
   (testing "Basic happy path"
     (let [get-expected (fn [op] (e/right {:op op, :arg1 2.0, :arg2 3.0}))]

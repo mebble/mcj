@@ -52,6 +52,13 @@
             (e/left "Can't have two dot arguments")
             (e/right (list opstr a1 a2))))))))
 
+(defn read-dot [[op arg1 arg2]]
+  (if (= :dot arg1)
+    (list op (read-line) arg2)
+    (if (= :dot arg2)
+      (list op arg1 (read-line))
+      (list op arg1 arg2))))
+
 (defn -main
   "Execute arithmetic expression from command line arguments"
   [& argv]
