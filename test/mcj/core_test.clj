@@ -1,7 +1,8 @@
 (ns mcj.core-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest testing is]]
             [mcj.core :refer :all]
-            [cats.monad.either :as e]))
+            [cats.monad.either :as e]
+            [spy.core :as spy]))
 
 (deftest test-argv-command
   (is (= (e/left "No command given") (argv-command ())))
@@ -13,10 +14,11 @@
   (is (= (e/left "Can't have two dot arguments") (argv-command '("add" "." ".")))))
 
 (deftest test-read-dot
-  (let [mocked (fn [f] (with-in-str "10" (f)))]
-    (is (= '("add" "2" "3") (mocked #(read-dot '("add" "2" "3")))))
-    (is (= '("add" "10" "3") (mocked #(read-dot '("add" :dot "3")))))
-    (is (= '("add" "2" "10") (mocked #(read-dot '("add" "2" :dot)))))))
+  (let [mock-read-line (spy/stub "10")]
+    (is (= '("add" "2" "3") (read-dot mock-read-line '("add" "2" "3"))))
+    (is (spy/not-called? mock-read-line))
+    (is (= '("add" "10" "3") (read-dot mock-read-line '("add" :dot "3"))))
+    (is (= '("add" "2" "10") (read-dot mock-read-line '("add" "2" :dot))))))
 
 (deftest test-get-command
   (testing "Basic happy path"

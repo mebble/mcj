@@ -52,7 +52,7 @@
             (e/left "Can't have two dot arguments")
             (e/right (list opstr a1 a2))))))))
 
-(defn read-dot [[op arg1 arg2]]
+(defn read-dot [read-line [op arg1 arg2]]
   (if (= :dot arg1)
     (list op (read-line) arg2)
     (if (= :dot arg2)
@@ -65,7 +65,7 @@
   (as-> argv x
        (argv-command x)
        (c/bind x #(->> %
-                       read-dot
+                       (read-dot read-line)
                        (apply get-command)))
        (c/bind x execute)
        (c/extract x)
