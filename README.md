@@ -7,8 +7,16 @@ A math CLI tool in Clojure.
 
 ## Installation
 
+### Install
+
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/mebble/mcj/main/scripts/install.sh | sh
+```
+
+### Remove
+
+```
+curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/mebble/mcj/main/scripts/remove.sh | sh
 ```
 
 ## Usage
@@ -34,7 +42,7 @@ lein eftest
 lein uberjar
 ```
 
-### Test scripts
+### Test Installation
 
 ```
 cd ~/.local
