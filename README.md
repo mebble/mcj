@@ -5,11 +5,17 @@
 
 A math CLI tool in Clojure.
 
+## Installation
+
+```
+curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/mebble/mcj/main/scripts/install.sh | sh
+```
+
 ## Usage
 
-FIXME: explanation
-
-    $ java -jar mcj-0.1.0-standalone.jar [args]
+```
+mcj add 2 3 | mcj div . 2
+```
 
 ## Development
 
