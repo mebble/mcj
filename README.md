@@ -28,3 +28,12 @@ lein eftest
 lein uberjar
 ```
 
+### Test scripts
+
+```
+cd ~/.local
+watch 'tree -L 2'
+watch 'cat bin/mcj'
+watch 'file share/mcj/mcj.jar'
+```
+
