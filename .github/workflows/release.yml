@@ -1,0 +1,28 @@
+name: Release
+on:
+  # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushbranchestagsbranches-ignoretags-ignore
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  uberjar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Prepare java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - name: Install clojure tools
+        uses: DeLaGuardo/setup-clojure@9.5
+        with:
+          lein: 2.9.8
+      - name: Build uberjar
+        run: lein uberjar
+      - name: Release uberjar
+        uses: softprops/action-gh-release@v1
+        with:
+          files: target/uberjar/mcj-*-standalone.jar

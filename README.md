@@ -20,3 +20,10 @@ FIXME: explanation
 ```
 lein eftest
 ```
+
+### Build
+
+```
+lein uberjar
+```
+
