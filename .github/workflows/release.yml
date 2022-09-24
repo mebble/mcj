@@ -25,4 +25,5 @@ jobs:
       - name: Release uberjar
         uses: softprops/action-gh-release@v1
         with:
-          files: target/uberjar/mcj-*-standalone.jar
+          files: target/default+uberjar/mcj-*-standalone.jar
+          fail_on_unmatched_files: true
