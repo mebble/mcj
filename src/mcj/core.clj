@@ -1,17 +1,17 @@
 (ns mcj.core
   (:gen-class)
   (:require [cats.core :as c]
-            [mcj.argv :refer [argv-command read-dot]]
-            [mcj.command :refer [get-command execute]]))
+            [mcj.argv :refer [parse-argv read-dot]]
+            [mcj.command :refer [parse-command execute]]))
 
 (defn -main
   "Execute arithmetic expression from command line arguments"
   [& argv]
   (as-> argv x
-       (argv-command x)
+       (parse-argv x)
        (c/bind x #(->> %
                        (read-dot read-line)
-                       (apply get-command)))
+                       (apply parse-command)))
        (c/bind x execute)
        (c/extract x)
        (println x)))

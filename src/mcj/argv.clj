@@ -4,7 +4,7 @@
 
 (defn- dot-or [s] (if (= "." s) :dot s))
 
-(defn argv-command [argv]
+(defn parse-argv [argv]
   (let [opstr (nth argv 0 "")
         arg1str (nth argv 1 "")
         arg2str (nth argv 2 "")

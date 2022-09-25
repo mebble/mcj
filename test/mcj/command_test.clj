@@ -1,45 +1,45 @@
 (ns mcj.command-test
   (:require [clojure.test :refer [deftest testing is]]
             [cats.monad.either :as e]
-            [mcj.command :refer [get-command execute]]))
+            [mcj.command :refer [parse-command execute]]))
 
 (deftest test-get-command
   (testing "Basic happy path"
     (let [get-expected (fn [op] (e/right {:op op, :arg1 2.0, :arg2 3.0}))]
-      (is (= (get-expected :add) (get-command "add" "2" "3")))
-      (is (= (get-expected :sub) (get-command "sub" "2" "3")))
-      (is (= (get-expected :mul) (get-command "mul" "2" "3")))
-      (is (= (get-expected :div) (get-command "div" "2" "3")))))
+      (is (= (get-expected :add) (parse-command "add" "2" "3")))
+      (is (= (get-expected :sub) (parse-command "sub" "2" "3")))
+      (is (= (get-expected :mul) (parse-command "mul" "2" "3")))
+      (is (= (get-expected :div) (parse-command "div" "2" "3")))))
 
   (testing "Negative arguments"
     (is (= (e/right {:op :add, :arg1 -2.0, :arg2 -3.0})
-           (get-command "add" "-2" "-3"))))
+           (parse-command "add" "-2" "-3"))))
 
   (testing "Fractional arguments"
     (is (= (e/right {:op :add, :arg1 2.5, :arg2 3.2})
-           (get-command "add" "2.5" "3.2"))))
+           (parse-command "add" "2.5" "3.2"))))
 
   (testing "Unknown command"
     (is (= (e/left "Unknown command foo")
-           (get-command "foo" "2" "3"))))
+           (parse-command "foo" "2" "3"))))
 
   (testing "Invalid argument"
     (is (= (e/left "Invalid argument abc")
-           (get-command "add" "abc" "3")))
+           (parse-command "add" "abc" "3")))
     (is (= (e/left "Invalid argument def")
-           (get-command "add" "2" "def")))
+           (parse-command "add" "2" "def")))
     (is (= (e/left "Invalid argument abc")
-           (get-command "add" "abc" "def"))))
+           (parse-command "add" "abc" "def"))))
 
   (testing "Missing argument"
     (let [expected (e/left "Insufficient arguments")]
       (testing "arg1"
-        (is (= expected (get-command "add" "" "3")))
-        (is (= expected (get-command "add" "   " "3"))))
+        (is (= expected (parse-command "add" "" "3")))
+        (is (= expected (parse-command "add" "   " "3"))))
 
       (testing "arg2"
-        (is (= expected (get-command "add" "2" "")))
-        (is (= expected (get-command "add" "2" "   ")))))))
+        (is (= expected (parse-command "add" "2" "")))
+        (is (= expected (parse-command "add" "2" "   ")))))))
 
 (deftest test-execute
   (testing "Happy path"
