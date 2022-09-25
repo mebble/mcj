@@ -7,11 +7,11 @@
 (deftest test-argv-command
   (is (= (e/left "No command given") (parse-argv ())))
   (is (= (e/left "No arguments given") (parse-argv '("add"))))
-  (is (= (e/right '("use", "2", "")) (parse-argv '("use" "2"))))
-  (is (= (e/right '("add" "2" "3")) (parse-argv '("add" "2" "3"))))
-  (is (= (e/right '("add" :dot "3")) (parse-argv '("add" "." "3"))))
-  (is (= (e/right '("add" "2" :dot)) (parse-argv '("add" "2" "."))))
-  (is (= (e/left "Can't have two dot arguments") (parse-argv '("add" "." ".")))))
+  (is (= (e/left "Can't have two dot arguments") (parse-argv '("add" "." "."))))
+  (is (= (e/right {:cmd-str '("use", "2", "")}) (parse-argv '("use" "2"))))
+  (is (= (e/right {:cmd-str '("add" "2" "3")}) (parse-argv '("add" "2" "3"))))
+  (is (= (e/right {:cmd-str '("add" :dot "3")}) (parse-argv '("add" "." "3"))))
+  (is (= (e/right {:cmd-str '("add" "2" :dot)}) (parse-argv '("add" "2" ".")))))
 
 (deftest test-read-dot
   (let [mock-read-line (spy/stub "10")]

@@ -14,7 +14,7 @@
       (s/blank? opstr)   (e/left "No command given")
       (s/blank? arg1str) (e/left "No arguments given")
       (= :dot a1 a2)     (e/left "Can't have two dot arguments")
-      :else              (e/right (list opstr a1 a2)))))
+      :else              (e/right {:cmd-str (list opstr a1 a2)}))))
 
 (defn read-dot [read-line [op arg1 arg2]]
   (cond

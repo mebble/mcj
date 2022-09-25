@@ -10,6 +10,7 @@
   (as-> argv x
        (parse-argv x)
        (c/bind x #(->> %
+                       :cmd-str
                        (read-dot read-line)
                        (apply parse-command)))
        (c/bind x execute)
