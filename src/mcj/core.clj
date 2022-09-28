@@ -2,7 +2,11 @@
   (:gen-class)
   (:require [cats.core :as c]
             [mcj.argv :refer [parse-argv read-dot]]
-            [mcj.command :refer [parse-command execute]]))
+            [mcj.command :refer [parse-command execute]]
+            [mcj.utils :refer [buildtime-env]]))
+
+(def project-url (buildtime-env :PROJECT_URL))
+(def app-version (buildtime-env :APP_VERSION))
 
 (defn -main
   "Execute arithmetic expression from command line arguments"

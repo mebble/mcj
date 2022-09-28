@@ -21,11 +21,9 @@ jobs:
         with:
           lein: 2.9.8
       - name: Build uberjar
-        run: lein uberjar
-      - name: Rename uberjar
-        run: mv target/default+uberjar/mcj-*-standalone.jar ./mcj.jar
+        run: make build
       - name: Release uberjar
         uses: softprops/action-gh-release@v1
         with:
-          files: mcj.jar
+          files: target/mcj.jar
           fail_on_unmatched_files: true

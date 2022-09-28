@@ -25,4 +25,4 @@ jobs:
           key: cljdeps-${{ hashFiles('project.clj') }}
           restore-keys: cljdeps-
       - name: Run tests
-        run: lein eftest
+        run: make test

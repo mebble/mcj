@@ -30,16 +30,35 @@ mcj add 2 3 | mcj div . 2
 - Scaffolded using `lein new app mcj`
 - [Get started with clojure](https://www.braveclojure.com/getting-started/)
 
+### Setup
+
+Run `cp .env.sample .env` and set the appropriate environment variables in `.env`.
+
+### Development Run
+
+```
+lein run add 2 3
+```
+
+### REPL
+
+```
+cd <project-root>
+lein repl
+```
+
+Now you can access variables in the `mcj.core` namespace. You can also switch to another namespace in the REPL. For example, to switch to `mcj.command`, run `(ns mcj.command)`. To exit the REPL, press `ctrl+d`.
+
 ### Test
 
 ```
-lein eftest
+make test
 ```
 
 ### Build
 
 ```
-lein uberjar
+make build
 ```
 
 ### Test Installation
@@ -50,4 +69,3 @@ watch 'tree -L 2'
 watch 'cat bin/mcj'
 watch 'file share/mcj/mcj.jar'
 ```
-
