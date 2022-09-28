@@ -24,5 +24,7 @@ jobs:
             ~/.deps.clj
           key: cljdeps-${{ hashFiles('project.clj') }}
           restore-keys: cljdeps-
+      - name: Setup environment
+        run: cp .env.sample .env
       - name: Run tests
         run: make test

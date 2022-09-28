@@ -20,6 +20,10 @@ jobs:
         uses: DeLaGuardo/setup-clojure@9.5
         with:
           lein: 2.9.8
+      - name: Setup environment
+        run: |
+          # export environment variables here
+          env > .env
       - name: Build uberjar
         run: make build
       - name: Release uberjar
