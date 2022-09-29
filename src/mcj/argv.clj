@@ -12,6 +12,7 @@
         a1 (dot-or arg1str)
         a2 (dot-or arg2str)]
     (cond
+      (in? argv "-h")    (e/right {:help true})
       (in? argv "-v")    (e/right {:version true})
       (s/blank? opstr)   (e/left "No command given")
       (s/blank? arg1str) (e/left "No arguments given")

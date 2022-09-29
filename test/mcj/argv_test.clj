@@ -15,7 +15,9 @@
     (is (= (e/right {:cmd-str '("add" "2" :dot)}) (parse-argv '("add" "2" ".")))))
 
   (testing "informational arguments"
-    (is (= (e/right {:version true}) (parse-argv '("-v"))))))
+    (is (= (e/right {:version true}) (parse-argv '("-v"))))
+    (is (= (e/right {:help true}) (parse-argv '("-h"))))
+    (is (= (e/right {:help true}) (parse-argv '("-h" "-v"))))))
 
 (deftest test-read-dot
   (let [mock-read-line (spy/stub "10")]
