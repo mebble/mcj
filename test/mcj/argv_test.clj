@@ -2,7 +2,7 @@
   (:require [clojure.test :refer [deftest is testing]]
             [spy.core :as spy]
             [cats.monad.either :as e]
-            [mcj.argv :refer [parse-argv read-dot]]))
+            [mcj.argv :refer [parse-argv read-dot break-out]]))
 
 (deftest test-argv-command
   (testing "arithmetric command arguments"
@@ -25,3 +25,9 @@
     (is (spy/not-called? mock-read-line))
     (is (= '("add" "10" "3") (read-dot mock-read-line '("add" :dot "3"))))
     (is (= '("add" "2" "10") (read-dot mock-read-line '("add" "2" :dot))))))
+
+(deftest test-break-out
+  (let [configs {:APP_VERSION "app-version"}]
+    (is (= (e/left "Help output")     (break-out configs {:help true :version true :cmd-str 'any})))
+    (is (= (e/left "app-version")     (break-out configs {:version true :cmd-str 'any})))
+    (is (= (e/right '("add" "2" "3")) (break-out configs {:cmd-str '("add" "2" "3")})))))

@@ -24,3 +24,9 @@
     (= :dot arg1) (list op (read-line) arg2)
     (= :dot arg2) (list op arg1 (read-line))
     :else         (list op arg1 arg2)))
+
+(defn break-out [configs parsed-argv]
+  (cond
+    (:help parsed-argv)    (e/left "Help output")
+    (:version parsed-argv) (e/left (:APP_VERSION configs))
+    :else                  (e/right (:cmd-str parsed-argv))))
