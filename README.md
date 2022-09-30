@@ -61,6 +61,13 @@ make test
 make build
 ```
 
+Run the build with:
+
+```
+java -jar target/mcj.jar -h
+java -jar target/mcj.jar add 2 3
+```
+
 ### Test Installation
 
 ```
