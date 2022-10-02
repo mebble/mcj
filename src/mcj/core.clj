@@ -8,15 +8,17 @@
 (def configs {:PROJECT_URL (buildtime-env :PROJECT_URL)
               :APP_VERSION (buildtime-env :APP_VERSION)})
 
+(defn monadic-pipeline [argv]
+  (c/->>= (parse-argv argv)
+          (break-out configs)
+          (#(->> (read-dot read-line %)
+                 (apply parse-command)))
+          execute))
+
 (defn -main
   "Execute arithmetic expression from command line arguments"
   [& argv]
-  (as-> argv x
-    (parse-argv x)
-    (c/bind x #(break-out configs %))
-    (c/bind x #(->> %
-                    (read-dot read-line)
-                    (apply parse-command)))
-    (c/bind x execute)
-    (c/extract x)
-    (println x)))
+  (->> argv
+       monadic-pipeline
+       c/extract
+       println))
