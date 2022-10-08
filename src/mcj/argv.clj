@@ -3,17 +3,18 @@
             [cats.monad.either :as e]
             [mcj.utils :refer [in?]]))
 
-(defn- dot-or [s] (if (= "." s) :dot s))
+(defn- dot-or [s] (if (= "." s) :dot (str s)))
 
 (defn parse-argv [argv]
-  (let [opstr (nth argv 0 "")
-        arg1str (nth argv 1 "")
-        arg2str (nth argv 2 "")
+  (let [has-h (in? argv "-h")
+        has-v (in? argv "-v")
+        argv (remove #{"-h" "-v" "-d"} argv)
+        [opstr arg1str arg2str] argv
         a1 (dot-or arg1str)
         a2 (dot-or arg2str)]
     (cond
-      (in? argv "-h")    (e/right {:help true})
-      (in? argv "-v")    (e/right {:version true})
+      has-h    (e/right {:help true})
+      has-v    (e/right {:version true})
       (s/blank? opstr)   (e/left "No command given")
       (s/blank? arg1str) (e/left "No arguments given")
       (= :dot a1 a2)     (e/left "Can't have two dot arguments")

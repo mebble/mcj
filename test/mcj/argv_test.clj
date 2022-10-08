@@ -4,7 +4,7 @@
             [cats.monad.either :as e]
             [mcj.argv :refer [parse-argv read-dot break-out]]))
 
-(deftest test-argv-command
+(deftest test-parse-argv
   (testing "arithmetric command arguments"
     (is (= (e/left "No command given") (parse-argv ())))
     (is (= (e/left "No arguments given") (parse-argv '("add"))))
@@ -17,7 +17,10 @@
   (testing "informational arguments"
     (is (= (e/right {:version true}) (parse-argv '("-v"))))
     (is (= (e/right {:help true}) (parse-argv '("-h"))))
-    (is (= (e/right {:help true}) (parse-argv '("-h" "-v"))))))
+    (is (= (e/right {:help true}) (parse-argv '("-h" "-v")))))
+
+  (testing "formatting arguments"
+    (is (= (e/left "No command given") (parse-argv '("-d"))))))
 
 (deftest test-read-dot
   (let [mock-read-line (spy/stub "10")]
