@@ -20,6 +20,6 @@
        (#(.setScale % n java.math.RoundingMode/HALF_UP))
        .doubleValue))
 
-(defn parse-double [x err-msg]
+(defn parse-number [x err-msg]
   (try (e/right (Double/parseDouble x))
        (catch NumberFormatException _e (e/left err-msg))))

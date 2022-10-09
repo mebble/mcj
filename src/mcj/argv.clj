@@ -2,13 +2,13 @@
   (:require [clojure.string :as s]
             [cats.core :as c]
             [cats.monad.either :as e]
-            [mcj.utils :refer [in? parse-double]]))
+            [mcj.utils :refer [in? parse-number]]))
 
 (defn- get-places [argv]
   (if (in? argv "-d")
     (let [key-loc (.indexOf argv "-d")
           val-str (nth argv (inc key-loc) "")]
-      (parse-double val-str "Do like dis: -d <integer>"))
+      (parse-number val-str "Do like dis: -d <integer>"))
     (e/right)))
 
 (defn- dot-or [s] (if (= "." s) :dot (str s)))
