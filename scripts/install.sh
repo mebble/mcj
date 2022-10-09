@@ -23,4 +23,8 @@ EOF
 
 chmod +x $EXE_PATH
 
-echo "Successfully installed"
+cat <<EOF
+Successfully installed!
+For usage instructions, run:
+mcj -h
+EOF
