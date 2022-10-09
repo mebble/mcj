@@ -5,11 +5,6 @@ on:
     tags:
       - "v*.*.*"
 
-env:
-  # https://docs.github.com/en/actions/learn-github-actions/contexts#env-context
-  APP_VERSION: ${{ env.GITHUB_REF_NAME }}
-  PROJECT_URL: https://github.com/mebble/mcj
-
 jobs:
   uberjar:
     runs-on: ubuntu-latest
@@ -26,7 +21,10 @@ jobs:
         with:
           lein: 2.9.8
       - name: Build uberjar
+        # https://docs.github.com/en/actions/learn-github-actions/contexts#env-context
         run: |
+          export APP_VERSION=$GITHUB_REF_NAME
+          export PROJECT_URL=https://github.com/mebble/mcj
           env > .env
           make build
       - name: Release uberjar
