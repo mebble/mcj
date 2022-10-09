@@ -39,8 +39,20 @@
     (= :dot arg2) (list op arg1 (read-line))
     :else         (list op arg1 arg2)))
 
+(defn- help-output [site-url] (str "Usage: mcj [command] [options]
+Commands:
+    add
+    sub
+    mul
+    div
+Options:
+    -h   Show usage instructions
+    -v   Show app version
+    -d n Format the result to n decimal places
+Website: " site-url))
+
 (defn break-out [configs parsed-argv]
   (cond
-    (:help parsed-argv)    (e/left "Help output")
+    (:help parsed-argv)    (e/left (help-output (:PROJECT_URL configs)))
     (:version parsed-argv) (e/left (:APP_VERSION configs))
     :else                  (e/right (:cmd-str parsed-argv))))

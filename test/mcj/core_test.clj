@@ -8,8 +8,7 @@
     (testing "Happy path"
 
       (testing "Information"
-        (is (= "vx.y.z\n" (mock-out #(-main "-v"))))
-        (is (= "Help output\n" (mock-out #(-main "-h")))))
+        (is (= "vx.y.z\n" (mock-out #(-main "-v")))))
 
       (testing "Arithmetic command"
         (testing "Basic"
