@@ -19,7 +19,7 @@
 
         (testing "Formatted output"
           (is (= "0.6667\n" (mock-out #(-main "div" "2" "3" "-d" "4"))))
-          (is (= "1.3333\n" (mock-out #(-main "div" "4" "3" "-d" "4")))))))
+          (is (= "1.333\n" (mock-out #(-main "div" "4" "3" "-d" "3")))))))
 
     (testing "Sad path"
       (is (= "No command given\n" (mock-out #(-main))))
