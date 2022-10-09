@@ -1,5 +1,6 @@
 (ns mcj.argv-test
   (:require [clojure.test :refer [deftest is testing]]
+            [clojure.string :as s]
             [spy.core :as spy]
             [cats.core :as c]
             [cats.monad.either :as e]
@@ -41,6 +42,6 @@
     (testing "Help output"
       (let [result (break-out configs {:help true :version true :cmd-str 'any})]
         (is (e/left? result))
-        (is (string? (c/extract result)))))
+        (is (s/includes? (c/extract result) "mcj [command] [options]"))))
     (is (= (e/left "app-version")     (break-out configs {:version true :cmd-str 'any})))
     (is (= (e/right '("add" "2" "3")) (break-out configs {:cmd-str '("add" "2" "3")})))))

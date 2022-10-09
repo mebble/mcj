@@ -39,7 +39,8 @@
     (= :dot arg2) (list op arg1 (read-line))
     :else         (list op arg1 arg2)))
 
-(defn- help-output [site-url] (str "Usage: mcj [command] [options]
+(defn- help-output [site-url] (str "Usage:
+    mcj [command] [options]
 Commands:
     add
     sub
@@ -49,7 +50,8 @@ Options:
     -h   Show usage instructions
     -v   Show app version
     -d n Format the result to n decimal places
-Website: " site-url))
+Website:
+    " site-url))
 
 (defn break-out [configs parsed-argv]
   (cond
