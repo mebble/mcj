@@ -3,8 +3,9 @@
 # https://unix.stackexchange.com/questions/8656/usr-bin-vs-usr-local-bin-on-linux
 # https://stackoverflow.com/questions/2953081/how-can-i-write-a-heredoc-to-a-file-in-bash-script
 
-ASSET_PATH="https://github.com/mebble/mcj/releases/latest/download/mcj.jar"
-VERSION=$(curl https://github.com/mebble/mcj/releases/latest/ -sI | grep "^location" | awk -F '/' '{print $NF}')
+VERSION=$(curl https://api.github.com/repos/mebble/mcj/releases/latest -sS | grep tag_name | cut -d \" -f 4)
+ASSET_PATH="https://github.com/mebble/mcj/releases/download/${VERSION}/mcj.jar"
+
 JAR_DIR="$HOME/.local/share/mcj"
 EXE_PATH="$HOME/.local/bin/mcj"
 
