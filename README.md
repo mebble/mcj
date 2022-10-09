@@ -75,4 +75,6 @@ cd ~/.local
 watch 'tree -L 2'
 watch 'cat bin/mcj'
 watch 'file share/mcj/mcj.jar'
+sh ./scripts/install.sh
+sh ./scripts/remove.sh
 ```
