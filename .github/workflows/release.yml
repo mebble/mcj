@@ -7,7 +7,7 @@ on:
 
 env:
   # https://docs.github.com/en/actions/learn-github-actions/contexts#env-context
-  APP_VERSION: env.GITHUB_REF_NAME
+  APP_VERSION: ${{ env.GITHUB_REF_NAME }}
   PROJECT_URL: https://github.com/mebble/mcj
 
 jobs:
