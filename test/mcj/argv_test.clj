@@ -20,7 +20,13 @@
     (is (= (e/right {:help true}) (parse-argv '("-h" "-v")))))
 
   (testing "formatting arguments"
-    (is (= (e/left "No command given") (parse-argv '("-d"))))))
+    (is (= (e/left "No command given") (parse-argv '("-d"))))
+    (is (= (e/left "Do like dis: -d <integer>") (parse-argv '("add" "2" "3" "-d"))))
+    (is (= (e/left "Do like dis: -d <integer>") (parse-argv '("add" "2" "3" "-d" "a"))))
+    (is (= (e/right {:cmd-str '("add" "2" "3") :places 2})
+           (parse-argv '("add" "2" "3" "-d" "2.5"))))
+    (is (= (e/right {:cmd-str '("add" "2" "3") :places 2})
+           (parse-argv '("add" "2" "3" "-d" "2"))))))
 
 (deftest test-read-dot
   (let [mock-read-line (spy/stub "10")]

@@ -1,13 +1,22 @@
 (ns mcj.argv
   (:require [clojure.string :as s]
+            [cats.core :as c]
             [cats.monad.either :as e]
-            [mcj.utils :refer [in?]]))
+            [mcj.utils :refer [in? parse-double]]))
+
+(defn- get-places [argv]
+  (if (in? argv "-d")
+    (let [key-loc (.indexOf argv "-d")
+          val-str (nth argv (inc key-loc) "")]
+      (parse-double val-str "Do like dis: -d <integer>"))
+    (e/right)))
 
 (defn- dot-or [s] (if (= "." s) :dot (str s)))
 
 (defn parse-argv [argv]
   (let [has-h (in? argv "-h")
         has-v (in? argv "-v")
+        places (get-places argv)
         argv (remove #{"-h" "-v" "-d"} argv)
         [opstr arg1str arg2str] argv
         a1 (dot-or arg1str)
@@ -18,7 +27,11 @@
       (s/blank? opstr)   (e/left "No command given")
       (s/blank? arg1str) (e/left "No arguments given")
       (= :dot a1 a2)     (e/left "Can't have two dot arguments")
-      :else              (e/right {:cmd-str (list opstr a1 a2)}))))
+      (e/left? places)   places
+      :else              (let [places-val (c/extract places)]
+                           (cond-> {:cmd-str (list opstr a1 a2)}
+                             places-val (assoc :places (int places-val))
+                             true e/right)))))
 
 (defn read-dot [read-line [op arg1 arg2]]
   (cond
