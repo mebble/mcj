@@ -1,21 +1,19 @@
 (ns mcj.command
   (:require [clojure.string :as s]
-            [cats.monad.either :as e]))
+            [cats.monad.either :as e]
+            [mcj.utils :refer [parse-double]]))
 
 (def ^:private operations #{:add :sub :mul :div})
 
-(defn- parse-arg [arg-str] (try (e/right (Double/parseDouble arg-str))
-                                (catch NumberFormatException _e
-                                  (e/left (str "Invalid argument " arg-str)))))
-
 (defn parse-command
   [op-str arg1-str arg2-str]
-  (let [op (keyword op-str)]
+  (let [op (keyword op-str)
+        msg "Invalid argument "]
     (cond
       (not (contains? operations op))     (e/left (str "Unknown command " op-str))
       (some s/blank? [arg1-str arg2-str]) (e/left "Insufficient arguments")
-      :else (let [arg1 (parse-arg arg1-str)
-                  arg2 (parse-arg arg2-str)
+      :else (let [arg1 (parse-double arg1-str (str msg arg1-str))
+                  arg2 (parse-double arg2-str (str msg arg2-str))
                   left (e/first-left [arg1 arg2])]
               (if-not (nil? left)
                 left

@@ -1,4 +1,5 @@
-(ns mcj.utils)
+(ns mcj.utils
+  (:require [cats.monad.either :as e]))
 
 (defmacro buildtime-env [env-key] (System/getenv (name env-key)))
 
@@ -18,3 +19,7 @@
        bigdec
        (#(.setScale % n java.math.RoundingMode/HALF_UP))
        .doubleValue))
+
+(defn parse-double [x err-msg]
+  (try (e/right (Double/parseDouble x))
+       (catch NumberFormatException _e (e/left err-msg))))
