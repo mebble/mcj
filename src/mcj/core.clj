@@ -10,13 +10,16 @@
 (def ^:private default-places 2)
 
 (defn- monadic-pipeline [argv]
-  (c/mlet [{places :places :as argv :or {places default-places}} (parse-argv argv)]
-          (c/fmap #(round-to places %) (c/->>= (c/return argv)
-                                   (break-out configs)
-                                   (#(->> %
-                                          (read-dot read-line)
-                                          (apply parse-command)))
-                                   execute))))
+  (c/mlet [{places :places
+            :as parsed
+            :or {places default-places}} (parse-argv argv)]
+          (c/->>= (c/return parsed)
+                  (break-out configs)
+                  (#(->> %
+                         (read-dot read-line)
+                         (apply parse-command)))
+                  execute
+                  (#(c/return (round-to places %))))))
 
 (defn -main
   "Execute arithmetic expression from command line arguments"
