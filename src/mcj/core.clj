@@ -9,22 +9,30 @@
                         :APP_VERSION (buildtime-env :APP_VERSION)})
 (def ^:private default-places 2)
 
-(defn- monadic-pipeline [argv]
+(defn- m-parse-command [x]
+  (->> x
+       (read-dot read-line)
+       (apply parse-command)))
+
+(defn- m-round [places n]
+  (->> n
+       (round-to places)
+       (c/return)))
+
+(defn- m-app [argv]
   (c/mlet [{places :places
             :as parsed
             :or {places default-places}} (parse-argv argv)]
           (c/->>= (c/return parsed)
                   (break-out configs)
-                  (#(->> %
-                         (read-dot read-line)
-                         (apply parse-command)))
-                  execute
-                  (#(c/return (round-to places %))))))
+                  (m-parse-command)
+                  (execute)
+                  (m-round places))))
 
 (defn -main
   "Execute arithmetic expression from command line arguments"
   [& argv]
   (->> argv
-       monadic-pipeline
+       m-app
        c/extract
        println))
