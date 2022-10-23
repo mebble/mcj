@@ -51,13 +51,17 @@ Now you can access variables in the `mcj.core` namespace. You can also switch to
 
 ### Test
 
-```
+```bash
+# Automatically re-run tests on file changes
+make test-watch
+
+# Run tests once
 make test
 ```
 
 ### Build
 
-```
+```bash
 make build
 ```
 

@@ -9,6 +9,9 @@ export
 test:
 	lein eftest
 
+test-watch:
+	lein test-refresh
+
 build:
 	lein uberjar
 	mv target/**/mcj-*-standalone.jar target/mcj.jar

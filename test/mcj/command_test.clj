@@ -3,7 +3,7 @@
             [cats.monad.either :as e]
             [mcj.command :refer [parse-command execute]]))
 
-(deftest test-get-command
+(deftest test-parse-command
   (testing "Basic happy path"
     (let [get-expected (fn [op] (e/right {:op op, :arg1 2.0, :arg2 3.0}))]
       (is (= (get-expected :add) (parse-command "add" "2" "3")))
