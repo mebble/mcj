@@ -49,6 +49,14 @@ lein repl
 
 Now you can access variables in the `mcj.core` namespace. You can also switch to another namespace in the REPL. For example, to switch to `mcj.command`, run `(ns mcj.command)`. To exit the REPL, press `ctrl+d`.
 
+#### REPL-driven Development in Neovim
+
+For neovim+conjure users, open up any clojure file and `<localleader>lv` to open the REPL output buffer. More details in the [conjure quickstart guide](https://github.com/Olical/conjure/wiki/Quick-start:-Clojure).
+
+To reset the REPL:
+- Exit and restart the lein REPL
+- Reconnect from conjure with `:ConjureConnect`
+
 ### Test
 
 ```bash

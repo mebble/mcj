@@ -10,5 +10,8 @@
                  [tortue/spy "2.13.0"]]
   :main ^:skip-aot mcj.core
   :target-path "target/%s"
+  :source-paths ["src" "dev"]
+  :repl-options {:init (do (require 'dev) (dev/init))
+                 :init-ns mcj.core}
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})

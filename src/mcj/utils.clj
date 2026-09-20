@@ -23,3 +23,10 @@
 (defn parse-number [x err-msg]
   (try (e/right (Double/parseDouble x))
        (catch NumberFormatException _e (e/left err-msg))))
+
+(comment
+  (parse-number "1.23" "Invalid number")
+  (parse-number "2" "Invalid number")
+  (parse-number "cat" "Invalid number")
+
+  'end)

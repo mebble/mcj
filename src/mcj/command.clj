@@ -21,6 +21,14 @@
                           :arg1 (e/branch-right arg1 identity)
                           :arg2 (e/branch-right arg2 identity)}))))))
 
+(comment
+  (parse-command "add" "1" "2")
+  (parse-command "sub" "3" "4")
+  (parse-command "foo" "1" "2")
+  (parse-command "add" "1" "")
+
+  'end)
+
 (defn execute
   [{op :op, arg1 :arg1, arg2 :arg2}]
   (case op
