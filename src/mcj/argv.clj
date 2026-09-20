@@ -11,6 +11,15 @@
       (parse-number val-str "Do like dis: -d <integer>"))
     (e/right)))
 
+(comment
+  (get-places ["2"])
+  (get-places ["-d"])
+  (get-places ["-d" ""])
+  (get-places ["-d" "cat"])
+  (get-places ["-d" "1" "-d" "2"])
+
+  'end)
+
 (defn- dot-or [s] (if (= "." s) :dot (str s)))
 
 (defn parse-argv [argv]
@@ -32,6 +41,17 @@
                            (cond-> {:cmd-str (list opstr a1 a2)}
                              places-val (assoc :places (int places-val))
                              true e/right)))))
+
+(comment
+  (parse-argv '("add" "2" "3" "-d"))
+  (parse-argv '("add" "2" "3" "-d" "2"))
+  (parse-argv '("add" "2" "3" "-d" "2.5"))
+  (parse-argv '("add" "." "3"))
+  (parse-argv '("add" "2" "."))
+  (parse-argv '("add" "." "."))
+  (parse-argv '("add"))
+
+  'end)
 
 (defn read-dot [read-line [op arg1 arg2]]
   (cond

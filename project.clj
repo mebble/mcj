@@ -10,8 +10,10 @@
                  [tortue/spy "2.13.0"]]
   :main ^:skip-aot mcj.core
   :target-path "target/%s"
-  :source-paths ["src" "dev"]
-  :repl-options {:init (do (require 'dev) (dev/init))
-                 :init-ns mcj.core}
+  :source-paths ["src"]
   :profiles {:uberjar {:aot :all
-                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
+                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}
+             ;; The :dev profile gets automatically used when running `lein repl`
+             :dev {:source-paths ["dev"]
+                   :repl-options {:init (do (require 'dev) (dev/init))
+                                  :init-ns mcj.core}}})

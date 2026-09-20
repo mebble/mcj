@@ -20,6 +20,16 @@
        (#(.setScale % n java.math.RoundingMode/HALF_UP))
        .doubleValue))
 
+(comment
+  (round-to 0 1.4)
+  (round-to 0 1.5)
+  (round-to 1 1.23)
+  (round-to 2 1.234)
+  (round-to 2 1.235)
+  (round-to 2 1.236)
+
+  'end)
+
 (defn parse-number [x err-msg]
   (try (e/right (Double/parseDouble x))
        (catch NumberFormatException _e (e/left err-msg))))
